@@ -661,6 +661,7 @@ define(function(require) {
                 labelEl2.append( 'text' )
                     .attr( 'y', labelYPosition )
                     .attr('font-size', '10')
+                    .attr('font-weight', '600')
                     .style( 'fill', ( d ) => {
                         if(d.pctChange === 0 || isNaN(d.pctChange)) {
                             return '#919395';
@@ -673,7 +674,7 @@ define(function(require) {
                     .attr( 'transform', ( d ) => {
                         const yPos = _labelsHorizontalY( d );
 
-                           return d.pctChange > 0 ? `translate(40, ${yPos+5}) rotate(180)` : `translate(30, ${yPos - 10})`;
+                           return d.pctChange > 0 ? `translate(30, ${yPos - 10})` : `translate(40, ${yPos+5}) rotate(180)`;
 
                     } )
                     .attr( 'points', function( d ) {
