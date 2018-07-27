@@ -116,6 +116,8 @@ define(function(require) {
             animationStepRatio = 70,
             backgroundColor = '#f7f8f9',
             backgroundWidth = 70,
+            downArrowColor = '#20AA3F',
+            upArrowColor = '#D14124',
             interRowDelay = (d, i) => animationStepRatio * i,
 
             highlightRowFunction = (rowSelection) => rowSelection.attr('fill', ({name}) => d3Color.color(colorMap(name)).darker()),
@@ -666,30 +668,27 @@ define(function(require) {
                         if(d.pctChange === 0 || isNaN(d.pctChange)) {
                             return '#919395';
                         }
-                        return d.pctChange > 0 ? '#D14124' : '#20aa3f';
+                        return d.pctChange > 0 ? upArrowColor : downArrowColor;
                     } )
                     .text( pctChangeText );
 
                 labelEl2.append( 'polygon' )
                     .attr( 'transform', ( d ) => {
                         const yPos = _labelsHorizontalY( d );
-
                            return d.pctChange > 0 ? `translate(30, ${yPos - 10})` : `translate(40, ${yPos+5}) rotate(180)`;
-
                     } )
                     .attr( 'points', function( d ) {
                         return '2,8 2,13 8,13 8,8 10,8 5,0 0,8';
                     } )
                     .style( 'fill', ( d ) => {
-                        return d.pctChange > 0 ? '#D14124' : '#20aa3f';
+                        return d.pctChange > 0 ? upArrowColor : downArrowColor;
                     } )
                     .attr( 'class', function( d ) {
-                        return d.pctChange > 0 ? 'down' : 'up';
+                        return d.pctChange < 0 ? 'down' : 'up';
                     } )
                     // just hide the percentages if the number is bogus
                     .attr( 'fill-opacity', function( d ) {
                         const pctChange = d.pctChange;
-
                         return ( isNaN( pctChange ) || pctChange === 0 ) ? 0.0 : 1.0;
                     } );
             }
@@ -901,8 +900,7 @@ define(function(require) {
         // API
 
         /**
-         * Gets or Sets the background color of a row in the chart, num in
-         * percentage
+         * Gets or Sets the background color of a row in the chart
          * @param  {string} _x desired color of the bar bg in hex
          * @return {string} current color
          * @public
@@ -915,6 +913,37 @@ define(function(require) {
 
             return this;
         }
+
+        /**
+         * Gets or Sets the up arrow color of a row in the chart
+         * @param  {string} _x desired color of the bar bg in hex
+         * @return {string} current color
+         * @public
+         */
+        exports.upArrowColor = function(_x) {
+            if (!arguments.length) {
+                return upArrowColor;
+            }
+            upArrowColor = _x;
+
+            return this;
+        }
+
+        /**
+         * Gets or Sets the down arrow color of a row in the chart
+         * @param  {string} _x desired color of the bar bg in hex
+         * @return {string} current color
+         * @public
+         */
+        exports.downArrowColor = function(_x) {
+            if (!arguments.length) {
+                return downArrowColor;
+            }
+            downArrowColor = _x;
+
+            return this;
+        }
+
 
         /**
          * Gets or Sets the background width of a row in the chart, num in
