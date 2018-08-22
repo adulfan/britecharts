@@ -652,7 +652,7 @@ define(function(require) {
             if(enableYAxisRight) {
                 labelEl2 = svg.select( '.metadata-group' )
                     .append( 'g' )
-                    .attr( 'transform', `translate(${chartWidth + 10}, 0)` )
+                    .attr( 'transform', `translate(${chartWidth + 20}, 0)` )
                     .classed( 'change-label-group', true )
                     .selectAll( 'g' )
                     .data( data.reverse() )
@@ -705,6 +705,8 @@ define(function(require) {
             if (isAnimated) {
                 rows = svg.select('.chart-group').selectAll('.row')
                     .data(dataZeroed);
+
+                svg.select('.chart-group-background line').remove();
 
                 rowsBg = svg.select('.chart-group-background').selectAll('.row')
                     .data(dataZeroed);
